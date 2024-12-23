@@ -1,13 +1,12 @@
 "use client";
-import { useParams } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
 import Spinner from "@/app/_components/Spinner";
+import { useParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 import GalleryHeader from "@/app/_components/GalleryHeader";
-import GalleryTwelve from "@/app/_components/GalleryTwelve";
+import GalleryThree from "@/app/_components/GalleryThree";
 import MyMap from "@/app/_components/MyMap";
 import OS_Day from "@/app/_components/OS_Day";
-import GalleryThree from "@/app/_components/GalleryThree";
 
 const Page = () => {
   const { id } = useParams();
@@ -42,7 +41,7 @@ const Page = () => {
   const trip_images = [];
   for (let i = 1; i <= gallery_size; i++) {
     trip_images.push(
-      `/img/galleries/great_walks${tripData.introduction.image}${i}.jpg`
+      `/img/galleries/great_walks${tripData.introduction.image}${i}.webp`
     );
   }
 

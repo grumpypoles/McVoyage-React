@@ -7,7 +7,7 @@ import TripButton from "@/app/_components/TripButton";
 
 function OS_Card({ os_trip }) {
   const os_image = `/img/galleries/overseas/${os_trip.image}`;
-  console.log(os_trip);
+  
   return (
     <div className="flex flex-col gap-10 text-lg bg-white rounded-t-xl ">
       <div className="relative overflow-hidden w-80 h-80 rounded-t-xl">
