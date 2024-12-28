@@ -12,7 +12,7 @@ const adventure = 'Te Ika-a-Māui'
       {osData.length === 0 ? (
         <p>Sorry no North south_island trips yet.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 md:gap-x-10 ">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-x-10 ">
           {osData.map((os_trip) => (
             <NI_Card key={os_trip.id} os_trip={os_trip} adventure={adventure}/>
           ))}

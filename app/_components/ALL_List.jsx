@@ -14,7 +14,7 @@ const ALL_List = async () => {
       {osData.length === 0 ? (
         <p>Sorry no overseas trips recorded yet.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-4 ">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
           {osData.map((os_trip) => (
             <ALL_Card key={os_trip.id} os_trip={os_trip} />
           ))}

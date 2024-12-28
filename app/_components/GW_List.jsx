@@ -12,7 +12,7 @@ const adventure = 'Great Walks'
       {osData.length === 0 ? (
         <p>Sorry no great walks trips yet.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 md:gap-x-10 ">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-x-10 ">
           {osData.map((os_trip) => (
             <GW_Card key={os_trip.id} os_trip={os_trip} adventure={adventure}/>
           ))}
