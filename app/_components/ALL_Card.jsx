@@ -49,9 +49,3 @@ function ALL_Card({ os_trip }) {
 
 export default ALL_Card;
 
-
-// href={
-//     os_trip?.card?.link_page && os_trip?._id
-//       ? `/${os_trip.card.link_page}/${os_trip._id}`
-//       : `/default-page` // Fallback route
-//   }
