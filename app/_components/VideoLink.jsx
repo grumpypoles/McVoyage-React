@@ -5,7 +5,9 @@ import {
   IoBookOutline,
   IoMapOutline,
   IoCameraOutline,
-  IoNavigateOutline
+  IoNavigateOutline,
+  IoBusOutline,
+  IoCarOutline
 } from "react-icons/io5";
 
 const iconMap = {
@@ -16,8 +18,9 @@ const iconMap = {
   ForwardIcon: IoFootstepsOutline,
   BookOpenIcon: IoBookOutline,
   CameraIcon: IoCameraOutline,
-  MapIcon: IoMapOutline
-  
+  MapIcon: IoMapOutline,
+  BusIcon: IoBusOutline,
+  CarIcon: IoCarOutline
 };
 export default function VideoLink({video_link, video_icon, children}) {
   const IconComponent = iconMap[video_icon] || IoVideocamOutline; // Default to VideoCameraIcon if no match
