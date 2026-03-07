@@ -7,7 +7,7 @@ import GalleryHeader from "@/app/_components/GalleryHeader";
 import GalleryTwelve from "@/app/_components/GalleryTwelve";
 import MyMap from "@/app/_components/MyMap";
 import OS_Day from "@/app/_components/OS_Day";
-
+import MarkdownRenderer from "@/app/_components/MarkdownRenderer";
 
 const Page = () => {
   const { id } = useParams();
@@ -37,15 +37,14 @@ const Page = () => {
     return <Spinner />;
   }
 
-  const gallery_size = tripData.introduction.image_number ?? 9
-  
+  const gallery_size = tripData.introduction.image_number ?? 9;
+
   const trip_images = [];
   for (let i = 1; i <= gallery_size; i++) {
     trip_images.push(
-      `/img/galleries/overseas${tripData.introduction.image}${i}.webp`
+      `/img/galleries/overseas${tripData.introduction.image}${i}.webp`,
     );
   }
-
 
   // // Loop through each day in the days array
 
@@ -88,7 +87,11 @@ const Page = () => {
             <h1 className="py-2 text-xl font-bold text-primary-800 md:text-3xl md:py-4">
               {tripData.introduction.title}
             </h1>
-            <p className=" text-primary-800">{tripData.introduction.text}</p>
+            {/* <p className=" text-primary-800">{tripData.introduction.text}</p> */}
+            <MarkdownRenderer
+              content={tripData.introduction.text}
+              className="text-primary-800"
+            />
           </div>
           <div className="flex items-center">
             <div className="grid grid-cols-3 gap-2 pt-24">
@@ -116,7 +119,7 @@ const Page = () => {
 
             return (
               <OS_Day
-              directory={"overseas"}
+                directory={"overseas"}
                 key={index} // Always include a unique key when rendering lists in React
                 day_number={day.day_number}
                 day_title={day.day_title} // Use correct property names

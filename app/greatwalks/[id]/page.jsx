@@ -7,6 +7,7 @@ import GalleryHeader from "@/app/_components/GalleryHeader";
 import GalleryThree from "@/app/_components/GalleryThree";
 import MyMap from "@/app/_components/MyMap";
 import OS_Day from "@/app/_components/OS_Day";
+import MarkdownRenderer from "@/app/_components/MarkdownRenderer";
 
 const Page = () => {
   const { id } = useParams();
@@ -36,16 +37,15 @@ const Page = () => {
     return <Spinner />;
   }
 
-  const gallery_size = tripData.introduction.image_number ?? 4
+  const gallery_size = tripData.introduction.image_number ?? 4;
 
   const trip_images = [];
   for (let i = 1; i <= gallery_size; i++) {
     trip_images.push(
-      `/img/galleries/great_walks${tripData.introduction.image}${i}.webp`
+      `/img/galleries/great_walks${tripData.introduction.image}${i}.webp`,
     );
   }
 
-  
   const link_map = tripData.map;
 
   return (
@@ -64,17 +64,19 @@ const Page = () => {
             <h1 className="py-2 text-xl font-bold text-primary-800 md:text-3xl md:py-4">
               {tripData.introduction.title}
             </h1>
-            <p className=" text-primary-800">{tripData.introduction.text}</p>
+            {/* <p className=" text-primary-800">{tripData.introduction.text}</p> */}
+            <MarkdownRenderer
+              content={tripData.introduction.text}
+              className="text-primary-800"
+            />
           </div>
           <div className="flex items-center">
             <div className="grid grid-cols-2 gap-2 pt-24">
-
               {trip_images.map((image, index) => (
                 <GalleryThree
                   src={image}
                   alt={`${tripData.introduction.image_alt} ${index + 1}`}
                   key={index}
-                 
                 />
               ))}
             </div>

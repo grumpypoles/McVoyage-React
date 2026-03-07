@@ -1,13 +1,13 @@
 "use client";
-import { useParams } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
 import Spinner from "@/app/_components/Spinner";
+import { useParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 import GalleryHeader from "@/app/_components/GalleryHeader";
 import GalleryTwelve from "@/app/_components/GalleryTwelve";
+import MarkdownRenderer from "@/app/_components/MarkdownRenderer";
 import MyMap from "@/app/_components/MyMap";
 import OS_Day from "@/app/_components/OS_Day";
-import GalleryThree from "@/app/_components/GalleryThree";
 
 const Page = () => {
   const { id } = useParams();
@@ -36,17 +36,16 @@ const Page = () => {
   if (loading) {
     return <Spinner />;
   }
- 
-  const gallery_size = tripData.introduction.image_number ?? 9
+
+  const gallery_size = tripData.introduction.image_number ?? 9;
 
   const trip_images = [];
   for (let i = 1; i <= gallery_size; i++) {
     trip_images.push(
-      `/img/galleries/north_island${tripData.introduction.image}${i}.webp`
+      `/img/galleries/north_island${tripData.introduction.image}${i}.webp`,
     );
   }
 
-  
   const link_map = tripData.map;
 
   return (
@@ -65,17 +64,19 @@ const Page = () => {
             <h1 className="py-2 text-xl font-bold text-primary-800 md:text-3xl md:py-4">
               {tripData.introduction.title}
             </h1>
-            <p className=" text-primary-800">{tripData.introduction.text}</p>
+            {/* <p className=" text-primary-800">{tripData.introduction.text}</p> */}
+            <MarkdownRenderer
+              content={tripData.introduction.text}
+              className="text-primary-800"
+            />
           </div>
           <div className="flex items-center">
             <div className="grid grid-cols-3 gap-2 pt-24">
-
               {trip_images.map((image, index) => (
                 <GalleryTwelve
                   src={image}
                   alt={`${tripData.introduction.image_alt} ${index + 1}`}
                   key={index}
-                 
                 />
               ))}
             </div>

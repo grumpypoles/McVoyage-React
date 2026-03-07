@@ -5,7 +5,7 @@ import Spinner from "@/app/_components/Spinner";
 
 import GalleryHeader from "@/app/_components/GalleryHeader";
 import OS_Day from "@/app/_components/OS_Day";
-
+import MarkdownRenderer from "@/app/_components/MarkdownRenderer";
 
 const Page = () => {
   const { id } = useParams();
@@ -35,7 +35,6 @@ const Page = () => {
     return <Spinner />;
   }
 
-  
   const link_map = tripData.map;
 
   return (
@@ -54,20 +53,22 @@ const Page = () => {
             <h1 className="py-2 text-xl font-bold text-primary-800 md:text-3xl md:py-4">
               {tripData.introduction.title}
             </h1>
-            <p className=" text-primary-800">{tripData.introduction.text}</p>
+            {/* <p className=" text-primary-800">{tripData.introduction.text}</p> */}
+            <MarkdownRenderer
+              content={tripData.introduction.text}
+              className="text-primary-800"
+            />
           </div>
           <div className="flex items-center pt-4">
-            
-              <div className="w-full h-[500px] md:order-2 md:w-full">
-                <iframe
-                  src={tripData.introduction.link_map}
-                  className="w-full h-[400px] border-0"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
-           
+            <div className="w-full h-[500px] md:order-2 md:w-full">
+              <iframe
+                src={tripData.introduction.link_map}
+                className="w-full h-[400px] border-0"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
           </div>
         </div>
 
@@ -84,7 +85,7 @@ const Page = () => {
 
             return (
               <OS_Day
-              directory={"overseas"}
+                directory={"overseas"}
                 key={index} // Always include a unique key when rendering lists in React
                 day_number={day.day_number}
                 day_title={day.day_title} // Use correct property names
@@ -100,8 +101,6 @@ const Page = () => {
             );
           })}
         </div>
-
- 
       </Suspense>
     </>
   );
