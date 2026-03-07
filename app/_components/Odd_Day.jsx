@@ -3,6 +3,7 @@ import GalleryTwelve from "./GalleryTwelve";
 import { VideoCameraIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import VideoLink from "./VideoLink";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 function Odd_Day({ day_number, day_title, day_date, day_comment, day_images, video_link }) {
   return (
@@ -28,7 +29,11 @@ function Odd_Day({ day_number, day_title, day_date, day_comment, day_images, vid
         <p className="block text-lg font-normal  text-primary-600 mb-6 tracking-[0.75px]">
           {day_date}
         </p>
-        <p className=" text-primary-800">{day_comment}</p>
+        {/* <p className=" text-primary-800">{day_comment}</p> */}
+        <MarkdownRenderer
+                        content={day_comment}
+                        className="text-primary-800"
+                      />
       </div>
       <div className="flex items-end pt-4 md:pt-0">
          <VideoLink video_link={video_link}>First Day in Athens</VideoLink>

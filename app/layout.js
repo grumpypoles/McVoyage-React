@@ -15,7 +15,7 @@ export const metadata = {
     template: "%s: McWoyage",
     default: "Welcome: McWoyage",
   },
-  description: "This section will required more thinking",
+  description: "McWoyage is a dedicated travel and outdoor adventure website showcasing New Zealand’s Great Walks and diverse international walking trips. The platform documents the experiences of Fiona Mckinney and Karol Wojasz, exploring the North Island’s landscapes and the South Island’s tramping tracks, with a particular focus on the Fiordland and Southland regions. Beyond New Zealand, the site features European adventures in countries such as Scotland, Poland, and Italy, combining a passion for the outdoors, birds, and photography.",
 };
 
 export default function RootLayout({ children }) {

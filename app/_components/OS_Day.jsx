@@ -2,6 +2,7 @@ import GalleryTwelve from "@/app/_components/GalleryTwelve";
 import VideoLinks from "@/app/_components/VideoLinks";
 import Sub_Day from "@/app/_components/Sub_Day";
 import MyMap from "./MyMap";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 function OS_Day({
   directory,
@@ -16,8 +17,7 @@ function OS_Day({
   day_page,
   sub_day,
   my_map,
-}) 
-{
+}) {
   const day_images = [];
   for (let i = 1; i <= image_number; i++) {
     day_images.push(`/img/galleries/${directory}${image}_${i}.webp`);
@@ -58,7 +58,11 @@ function OS_Day({
               <p className="block text-lg font-normal  text-primary-600 mb-6 tracking-[0.75px]">
                 {day_date}
               </p>
-              <p className=" text-primary-800">{day_comment}</p>
+              {/* <p className=" text-primary-800">{day_comment}</p> */}
+              <MarkdownRenderer
+                content={day_comment}
+                className="text-primary-800"
+              />
             </div>
             {/* <div className="grid items-end grid-cols-4 gap-2 pt-8 ">
               {video_link.length > 0 &&
@@ -104,7 +108,11 @@ function OS_Day({
               <p className="block text-lg font-normal  text-primary-600 mb-6 tracking-[0.75px]">
                 {day_date}
               </p>
-              <p className="mb-4 text-primary-800 md:mb-0 ">{day_comment}</p>
+              {/* <p className="mb-4 text-primary-800 md:mb-0 ">{day_comment}</p> */}
+              <MarkdownRenderer
+                content={day_comment}
+                className="mb-4 text-primary-800 md:mb-0"
+              />
               {/* <div className="grid items-end grid-cols-4 gap-2 pt-8">
                 {video_link.length > 0 &&
                   video_link.map((link, index) => (
