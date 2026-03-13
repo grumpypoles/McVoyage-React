@@ -64,21 +64,7 @@ function OS_Day({
                 className="text-primary-800"
               />
             </div>
-            {/* <div className="grid items-end grid-cols-4 gap-2 pt-8 ">
-              {video_link.length > 0 &&
-                video_link.map((link, index) => (
-                  <div key={index}>
-                    <VideoLink
-                      video_link={link.link}
-                      video_icon={link.link_icon}
-                    >
-                      {" "}
-                      {link.link_title}
-                    </VideoLink>
-                  </div>
-                ))}
-            </div> */}
-            <VideoLinks video_link={video_link} />
+             <VideoLinks video_link={video_link} />
           </div>
         ) : (
           <div className="grid px-8 py-2 mx-auto bg-gray-100 rounded-md gap-x-24 md:grid-cols-2 md:w-3/5 md:py-12">
@@ -113,21 +99,7 @@ function OS_Day({
                 content={day_comment}
                 className="mb-4 text-primary-800 md:mb-0"
               />
-              {/* <div className="grid items-end grid-cols-4 gap-2 pt-8">
-                {video_link.length > 0 &&
-                  video_link.map((link, index) => (
-                    <div key={index}>
-                      <VideoLink
-                        video_link={link.link}
-                        video_icon={link.link_icon}
-                      >
-                        {" "}
-                        {link.link_title}
-                      </VideoLink>
-                    </div>
-                  ))}
-              </div> */}
-              <VideoLinks video_link={video_link} />
+               <VideoLinks video_link={video_link} />
             </div>
           </div>
         )}
