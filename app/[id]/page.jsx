@@ -1,44 +1,24 @@
-"use client";
+import { notFound, redirect } from "next/navigation";
+import connectDB from "@/app/_config/database";
+import ALLTrip from "@/app/_models/ALLTrip";
 
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import Spinner from "@/app/_components/Spinner";
+async function getTrip(id) {
+  await connectDB();
+  const trip = await ALLTrip.findById(id).lean();
+  if (!trip) return null;
+  return JSON.parse(JSON.stringify(trip));
+}
 
-const Page = () => {
-  const { id } = useParams();
-  const router = useRouter();
-  const [tripData, setTripData] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default async function Page({ params }) {
+  const tripData = await getTrip(params.id);
 
-  useEffect(() => {
-    const fetchTripData = async () => {
-      if (!id) return;
+  if (!tripData) notFound();
 
-      try {
-        const res = await fetch(`/api/al_trips/${id}`);
-        const osData = await res.json();
-
-        setTripData(osData);
-
-        // Automatically navigate to the page link if it exists
-        if (osData?.card?.page_link) {
-          router.push(osData.card.page_link);
-        }
-      } catch (error) {
-        console.error("Error fetching trip data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTripData();
-  }, [id, router]);
-
-  if (loading) {
-    return <Spinner />;
+  // Redirect server-side — no client JS needed
+  if (tripData?.card?.page_link) {
+    redirect(tripData.card.page_link);
   }
 
-  return null; // No need to render anything since the user is redirected
-};
-
-export default Page;
+  // Fallback: no page_link configured
+  return null;
+}

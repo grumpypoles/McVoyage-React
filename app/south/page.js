@@ -1,5 +1,9 @@
 import Image from "next/image";
 import { Suspense } from "react";
+export const metadata = {
+  title: "South Island Walks",
+  description: "Walking trips across New Zealand's South Island — paradise on earth.",
+};
 import Spinner from "@/app/_components/Spinner";
 import bg from "@/public/img/galleries/south_island/south_island.jpg";
 import SI_List from "@/app/_components/SI_List";

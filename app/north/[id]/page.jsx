@@ -1,122 +1,103 @@
-"use client";
-import Spinner from "@/app/_components/Spinner";
-import { useParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { notFound } from "next/navigation";
+import connectDB from "@/app/_config/database";
+import NITrip from "@/app/_models/NITrip";
 
 import GalleryHeader from "@/app/_components/GalleryHeader";
 import GalleryTwelve from "@/app/_components/GalleryTwelve";
-import MarkdownRenderer from "@/app/_components/MarkdownRenderer";
 import MyMap from "@/app/_components/MyMap";
 import OS_Day from "@/app/_components/OS_Day";
+import MarkdownRenderer from "@/app/_components/MarkdownRenderer";
 
-const Page = () => {
-  const { id } = useParams();
-  const [tripData, setTripData] = useState(null);
-  const [loading, setLoading] = useState(true);
+export async function generateMetadata({ params }) {
+  const tripData = await getTrip(params.id);
+  if (!tripData) return {};
+  return {
+    title: tripData.introduction.title,
+  };
+}
 
-  useEffect(() => {
-    const fetchTripData = async () => {
-      if (!id) return;
+async function getTrip(id) {
+  await connectDB();
+  const trip = await NITrip.findById(id).lean();
+  if (!trip) return null;
+  return JSON.parse(JSON.stringify(trip));
+}
 
-      try {
-        const res = await fetch(`/api/ni_trips/${id}`);
-        const osData = await res.json();
+export default async function Page({ params }) {
+  const tripData = await getTrip(params.id);
 
-        setTripData(osData);
-      } catch (error) {
-        console.error("Error fetching trip data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTripData();
-  }, [id]);
-
-  if (loading) {
-    return <Spinner />;
-  }
+  if (!tripData) notFound();
 
   const gallery_size = tripData.introduction.image_number ?? 9;
-
-  const trip_images = [];
-  for (let i = 1; i <= gallery_size; i++) {
-    trip_images.push(
-      `/img/galleries/north_island${tripData.introduction.image}${i}.webp`,
-    );
-  }
-
-  const link_map = tripData.map;
+  const trip_images = Array.from({ length: gallery_size }, (_, i) =>
+    `/img/galleries/north_island${tripData.introduction.image}${i + 1}.webp`
+  );
 
   return (
     <>
-      <Suspense fallback={<Spinner />}>
+      <div>
+        <GalleryHeader
+          src={`/img/galleries/north_island${tripData.gallery_header.src}`}
+          title={tripData.gallery_header.title}
+          position={tripData.gallery_header.position}
+          text={tripData.gallery_header.text_color}
+        />
+      </div>
+
+      <div className="grid px-8 py-12 mx-auto bg-gray-100 rounded-md gap-x-24 md:grid-cols-2 md:w-3/5">
         <div>
-          <GalleryHeader
-            src={`/img/galleries/north_island${tripData.gallery_header.src}`}
-            title={tripData.gallery_header.title}
-            position={tripData.gallery_header.position}
-            text={tripData.gallery_header.text_color}
+          <h1 className="py-2 text-xl font-bold text-primary-800 md:text-3xl md:py-4">
+            {tripData.introduction.title}
+          </h1>
+          <MarkdownRenderer
+            content={tripData.introduction.text}
+            className="text-primary-800"
           />
         </div>
-        <div className="grid px-8 py-12 mx-auto bg-gray-100 rounded-md gap-x-24 md:grid-cols-2 md:w-3/5 ">
-          <div>
-            <h1 className="py-2 text-xl font-bold text-primary-800 md:text-3xl md:py-4">
-              {tripData.introduction.title}
-            </h1>
-            {/* <p className=" text-primary-800">{tripData.introduction.text}</p> */}
-            <MarkdownRenderer
-              content={tripData.introduction.text}
-              className="text-primary-800"
-            />
-          </div>
-          <div className="flex items-center">
-            <div className="grid grid-cols-3 gap-2 pt-24">
-              {trip_images.map((image, index) => (
-                <GalleryTwelve
-                  src={image}
-                  alt={`${tripData.introduction.image_alt} ${index + 1}`}
-                  key={index}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="pt-16">
-          {tripData.days.map((day, index) => {
-            // Extracting the array of link objects from day.day_link
-            const video_link = day.day_link
-              .filter((link) => link.link_icon.length > 0) // filter links where link.link.length > 0
-              .map((link) => ({
-                link: link.link,
-                link_title: link.link_title,
-                link_icon: link.link_icon,
-              }));
-
-            return (
-              <OS_Day
-                directory={"north_island"}
-                key={index} // Always include a unique key when rendering lists in React
-                day_number={day.day_number}
-                day_title={day.day_title} // Use correct property names
-                day_date={day.day_date}
-                day_comment={day.day_comment}
-                day_page={day.page} // Ensure correct field name is used
-                image={day.day_image.image}
-                image_number={day.day_image.image_number}
-                image_alt={day.day_image.image_alt}
-                video_link={video_link} // Pass the array of links
+        <div className="flex items-center">
+          <div className="grid grid-cols-3 gap-2 pt-24">
+            {trip_images.map((image, index) => (
+              <GalleryTwelve
+                src={image}
+                alt={`${tripData.introduction.image_alt} ${index + 1}`}
+                key={index}
               />
-            );
-          })}
+            ))}
+          </div>
         </div>
+      </div>
 
-        <div className="py-8 bg-white ">
-          <MyMap my_map={link_map} />
-        </div>
-      </Suspense>
+      <div className="pt-16">
+        {tripData.days.map((day, index) => {
+          const video_link = day.day_link
+            .filter((link) => link.link_icon.length > 0)
+            .map((link) => ({
+              link: link.link,
+              link_title: link.link_title,
+              link_icon: link.link_icon,
+            }));
+
+          return (
+            <OS_Day
+              directory="north_island"
+              key={index}
+              day_number={day.day_number}
+              day_title={day.day_title}
+              day_date={day.day_date}
+              day_comment={day.day_comment}
+              day_page={day.page}
+              image={day.day_image.image}
+              image_number={day.day_image.image_number}
+              image_alt={day.day_image.image_alt}
+              video_link={video_link}
+            />
+          );
+        })}
+      </div>
+
+      <div className="py-8 bg-white">
+        <MyMap my_map={tripData.map} />
+      </div>
     </>
   );
-};
-export default Page;
+}

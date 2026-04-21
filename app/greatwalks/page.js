@@ -1,6 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+export const metadata = {
+  title: "Great Walks",
+  description: "New Zealand's Great Walks — a record of every trail Fiona and Karol have conquered.",
+};
 import Spinner from "@/app/_components/Spinner";
 import bg from "@/public/img/galleries/great_walks/tongoriro_emerald_lake_card.jpg";
 import GW_List from "../_components/GW_List";

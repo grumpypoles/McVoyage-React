@@ -1,5 +1,9 @@
 import Image from "next/image";
 import { Suspense } from "react";
+export const metadata = {
+  title: "North Island Walks",
+  description: "Walking trips across New Zealand's North Island — remarkable places to enjoy.",
+};
 import Spinner from "@/app/_components/Spinner";
 import bg from "@/public/img/galleries/north_island/Tongoriro.jpg";
 import NI_List from "@/app/_components/NI_List";
