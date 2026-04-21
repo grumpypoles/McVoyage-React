@@ -11,10 +11,10 @@ function MyMap({ my_map }) {
   const { link_map, link_book, link_camera, link_video, link_folder } = my_map;
 
   const links = [
-    { href: link_book,   icon: IoBookOutline,     label: "Journal"   },
+    { href: link_book,   icon: IoBookOutline,     label: "Info"   },
     { href: link_camera, icon: IoCameraOutline,   label: "Photos"    },
     { href: link_video,  icon: IoVideocamOutline, label: "Video"     },
-    { href: link_folder, icon: IoMapOutline,      label: "GPX track" },
+    { href: link_folder, icon: IoMapOutline,      label: "Ref" },
   ];
 
   const activeLinks = links.filter(({ href }) => href);
