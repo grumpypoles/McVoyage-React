@@ -44,9 +44,9 @@ export default async function Page({ params }) {
         />
       </div>
 
-      <div className="grid px-8 py-12 mx-auto bg-gray-100 rounded-md gap-x-24 md:grid-cols-2 md:w-3/5">
+      <div className="grid px-8 py-12 mx-auto bg-gray-100 rounded-md gap-x-24 lg:grid-cols-2 lg:w-3/5">
         <div>
-          <h1 className="py-2 text-xl font-bold text-primary-800 md:text-3xl md:py-4">
+          <h1 className="py-2 text-xl font-bold text-primary-800 lg:text-3xl lg:py-4">
             {tripData.introduction.title}
           </h1>
           <MarkdownRenderer
