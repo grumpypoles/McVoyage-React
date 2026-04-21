@@ -20,8 +20,8 @@ function MyMap({ my_map }) {
   const activeLinks = links.filter(({ href }) => href);
 
   return (
-    <div className="grid px-8 py-4 mx-auto bg-gray-100 rounded-md md:grid-cols-[10%_90%] md:gap-x-2 md:py-8 md:w-3/5">
-      <div className="w-full h-[500px] md:order-2">
+    <div className="grid px-8 py-4 mx-auto bg-gray-100 rounded-md lg:grid-cols-[10%_90%] lg:gap-x-2 lg:py-8 lg:w-3/5">
+      <div className="w-full h-[500px] lg:order-2">
         <iframe
           src={link_map}
           className="w-full h-full border-0"
@@ -31,16 +31,16 @@ function MyMap({ my_map }) {
         ></iframe>
       </div>
 
-      {/* Mobile: row of icon+label stacked vertically, spread across bottom of map container */}
-      {/* Desktop: vertical column in the left sidebar */}
-      <div className="flex flex-row justify-around py-3 text-blue-600 border-t border-gray-200 md:order-1 md:flex-col md:justify-start md:border-t-0 md:pl-4 md:pt-16">
+      {/* Mobile + tablet: icons spread in a row below the map */}
+      {/* Desktop (lg+): vertical column in the left sidebar */}
+      <div className="flex flex-row justify-around py-3 text-blue-600 border-t border-gray-200 lg:order-1 lg:flex-col lg:justify-start lg:border-t-0 lg:pl-4 lg:pt-16">
         {activeLinks.map(({ href, icon: Icon, label }) => (
           <Link
             key={label}
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center text-xs font-medium gap-y-1 hover:text-blue-800 md:flex-row md:gap-x-2 md:text-sm md:mb-4"
+            className="flex flex-col items-center text-xs font-medium gap-y-1 hover:text-blue-800 lg:flex-row lg:gap-x-2 lg:text-sm lg:mb-4"
           >
             <Icon className="w-5 h-5 shrink-0" />
             <span>{label}</span>
