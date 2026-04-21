@@ -26,8 +26,8 @@ function GW_Card({ os_trip, adventure }) {
             className="object-cover w-full shadow-xl h-1/2 shadow-black/40 rounded-xl"
             style={{ clipPath: "polygon(0 0, 100% 0, 100% 85%, 0 100%)" }}
             src={os_image}
-            width={100}
-            height={50}
+            width={288}
+            height={250}
             alt={`${card.title} Trip`}
           />
           <div

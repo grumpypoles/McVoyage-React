@@ -1,31 +1,40 @@
 'use client';
 import { useState } from "react";
-import { usePathname } from "next/navigation"; // Import usePathname
+import { usePathname } from "next/navigation";
 import Link from "next/link";
+
+const navLinks = [
+  { href: "/greatwalks", label: "Great Walks" },
+  { href: "/overseas",   label: "Overseas"    },
+  { href: "/north",      label: "North Island" },
+  { href: "/south",      label: "South Island" },
+];
 
 export default function Navigation() {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const pathname = usePathname(); // Get the current path
+  const pathname = usePathname();
 
-  const isActive = (path) => pathname === path;
+  const isActive = (href) => pathname === href;
 
   return (
     <div>
       <nav className="z-10 text-primary-50">
         <section className="flex MOBILE-MENU lg:hidden">
           <div
-            className="space-y-2 HAMBURGER-ICON"
+            className="space-y-2 cursor-pointer HAMBURGER-ICON"
             onClick={() => setIsNavOpen((prev) => !prev)}
+            aria-label="Open menu"
           >
-            <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
-            <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
-            <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
+            <span className="block h-0.5 w-8 bg-gray-600"></span>
+            <span className="block h-0.5 w-8 bg-gray-600"></span>
+            <span className="block h-0.5 w-8 bg-gray-600"></span>
           </div>
 
           <div className={isNavOpen ? "showMenuNav" : "hideMenuNav"}>
             <div
-              className="absolute top-0 right-0 px-8 py-8"
+              className="absolute top-0 right-0 px-8 py-8 cursor-pointer"
               onClick={() => setIsNavOpen(false)}
+              aria-label="Close menu"
             >
               <svg
                 className="w-8 h-8 text-gray-600"
@@ -41,14 +50,16 @@ export default function Navigation() {
               </svg>
             </div>
             <ul className="flex flex-col items-center justify-between min-h-[250px]">
-              {["/greatwalks", "/overseas", "/north", "/south"].map((path) => (
+              {navLinks.map(({ href, label }) => (
                 <li
-                  key={path}
+                  key={href}
                   className={`my-8 uppercase border-b border-gray-400 ${
-                    isActive(path) ? "text-green-500 font-bold" : ""
+                    isActive(href) ? "text-green-500 font-bold" : ""
                   }`}
                 >
-                  <Link href={path}>{path.replace("/", "").toUpperCase()}</Link>
+                  <Link href={href} onClick={() => setIsNavOpen(false)}>
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -56,12 +67,12 @@ export default function Navigation() {
         </section>
 
         <ul className="hidden space-x-8 DESKTOP-MENU lg:flex">
-          {["/greatwalks", "/overseas", "/north", "/south"].map((path) => (
+          {navLinks.map(({ href, label }) => (
             <li
-              key={path}
-              className={isActive(path) ? "text-green-500 font-bold" : ""}
+              key={href}
+              className={isActive(href) ? "text-green-500 font-bold" : ""}
             >
-              <Link href={path}>{path.replace("/", "").toUpperCase()}</Link>
+              <Link href={href}>{label}</Link>
             </li>
           ))}
         </ul>
@@ -77,8 +88,8 @@ export default function Navigation() {
           height: 100vh;
           top: 0;
           left: 0;
-          background: rgba(0, 0, 0, 0.7); 
-          z-index: 999; /* Increase z-index */
+          background: rgba(0, 0, 0, 0.7);
+          z-index: 999;
           display: flex;
           flex-direction: column;
           justify-content: space-evenly;
