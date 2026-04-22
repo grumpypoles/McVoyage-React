@@ -57,9 +57,9 @@ function OS_Card({ os_trip }) {
               ? `/overseas/${os_trip._id}/${os_trip.page_link}`
               : `/overseas/${os_trip._id}`
           }
-          className="flex items-center mb-4 text-2xl font-semibold text-primary-300"
+          className="flex justify-center mb-4"
         >
-          <TripButton variant={"white"} animated={false}>
+          <TripButton variant={"white"} animated={false} size="sm">
             Details
           </TripButton>
         </Link>

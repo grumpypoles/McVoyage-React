@@ -3,7 +3,6 @@ import Link from "next/link";
 import TripButton from "@/app/_components/TripButton";
 
 function ALL_Card({ os_trip }) {
- 
   const os_image = `/img/galleries/main/${os_trip.card.image}`;
 
   return (
@@ -14,27 +13,27 @@ function ALL_Card({ os_trip }) {
             {os_trip.card.title}
           </h1>
 
-          <div className="relative overflow-hidden w-96 h-80 ">
-          
+          <div className="relative overflow-hidden w-96 h-80">
             <Image
               src={os_image}
-              alt={`${os_trip.title} Trip`}
-              fill // Ensures the image covers the container
+              alt={`${os_trip.card.title} Trip`}
+              fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover" // Maintain aspect ratio, fill the container
+              className="object-cover"
             />
           </div>
+
           <div className="h-64 p-8 text-base text-center text-gray-800">
             <p>{os_trip.card.comment}</p>
-            </div>
-            <div className="flex items-center py-4 text-2xl font-semibold text-primary-300">
+          </div>
+
+          <div className="flex justify-center py-4">
             <Link href={`/${os_trip._id}`}>
-              <TripButton variant={"green"} animated={false}>
+              <TripButton variant={"green"} animated={false} size="sm">
                 Details
               </TripButton>
             </Link>
-            </div>
-          
+          </div>
         </div>
       </div>
     </div>
@@ -42,4 +41,3 @@ function ALL_Card({ os_trip }) {
 }
 
 export default ALL_Card;
-
