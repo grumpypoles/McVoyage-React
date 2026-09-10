@@ -10,15 +10,14 @@ async function getTrip(id) {
 }
 
 export default async function Page({ params }) {
-  const tripData = await getTrip(params.id);
+  const { id } = await params;
+  const tripData = await getTrip(id);
 
   if (!tripData) notFound();
 
-  // Redirect server-side — no client JS needed
   if (tripData?.card?.page_link) {
     redirect(tripData.card.page_link);
   }
 
-  // Fallback: no page_link configured
   return null;
 }

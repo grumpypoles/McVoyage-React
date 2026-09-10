@@ -6,16 +6,7 @@ import GalleryHeader from "@/app/_components/GalleryHeader";
 import GalleryTwelve from "@/app/_components/GalleryTwelve";
 import MyMap from "@/app/_components/MyMap";
 import OS_Day from "@/app/_components/OS_Day";
-import GalleryThree from "@/app/_components/GalleryThree";
 import MarkdownRenderer from "@/app/_components/MarkdownRenderer";
-
-export async function generateMetadata({ params }) {
-  const tripData = await getTrip(params.id);
-  if (!tripData) return {};
-  return {
-    title: tripData.introduction.title,
-  };
-}
 
 async function getTrip(id) {
   await connectDB();
@@ -24,8 +15,16 @@ async function getTrip(id) {
   return JSON.parse(JSON.stringify(trip));
 }
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const tripData = await getTrip(id);
+  if (!tripData) return {};
+  return { title: tripData.introduction.title };
+}
+
 export default async function Page({ params }) {
-  const tripData = await getTrip(params.id);
+  const { id } = await params;
+  const tripData = await getTrip(id);
 
   if (!tripData) notFound();
 

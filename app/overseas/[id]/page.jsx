@@ -8,14 +8,6 @@ import MyMap from "@/app/_components/MyMap";
 import OS_Day from "@/app/_components/OS_Day";
 import MarkdownRenderer from "@/app/_components/MarkdownRenderer";
 
-export async function generateMetadata({ params }) {
-  const tripData = await getTrip(params.id);
-  if (!tripData) return {};
-  return {
-    title: tripData.introduction.title,
-  };
-}
-
 async function getTrip(id) {
   await connectDB();
   const trip = await OSTrip.findById(id).lean();
@@ -23,8 +15,16 @@ async function getTrip(id) {
   return JSON.parse(JSON.stringify(trip));
 }
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const tripData = await getTrip(id);
+  if (!tripData) return {};
+  return { title: tripData.introduction.title };
+}
+
 export default async function Page({ params }) {
-  const tripData = await getTrip(params.id);
+  const { id } = await params;
+  const tripData = await getTrip(id);
 
   if (!tripData) notFound();
 
