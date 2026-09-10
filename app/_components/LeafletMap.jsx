@@ -31,9 +31,8 @@ function LeafletMap({ gpxPath, center, zoom = 11 }) {
       });
 
       // Stadia Outdoors — shows terrain, contours and trail markings
-      // Free API key required for production: https://stadiamaps.com
       L.tileLayer(
-        "https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png",
+        `https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png?api_key=${process.env.NEXT_PUBLIC_STADIA_API_KEY}`,
         {
           attribution:
             '© <a href="https://stadiamaps.com/">Stadia Maps</a> ' +
