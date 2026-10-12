@@ -3,7 +3,7 @@ import connectDB from "@/app/_config/database";
 import GWTrip from "@/app/_models/SITrip";
 
 export async function GET(request, { params }) {
-  const { id } = params;
+  const { id } = await params;
 
   try {
     await connectDB();

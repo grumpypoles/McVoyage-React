@@ -32,7 +32,7 @@ function MyMap({ my_map }) {
     { href: link_book,   icon: IoBookOutline,     label: "Journal"   },
     { href: link_camera, icon: IoCameraOutline,   label: "Photos"    },
     { href: link_video,  icon: IoVideocamOutline, label: "Video"     },
-    { href: link_folder, icon: IoMapOutline,      label: "GPX track" },
+    { href: link_folder, icon: IoMapOutline,      label: "Reference" },
   ];
 
   const activeLinks = links.filter(({ href }) => href);
