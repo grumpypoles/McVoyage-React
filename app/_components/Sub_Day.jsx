@@ -19,14 +19,19 @@ function Sub_Day({
 
   const isEven = sub_page === "Even";
 
-  // Desktop placement: heading is row 1 of the text column; images and the
-  // comment share row 2, so the images start level with sub_comment.
-  const textCol = isEven ? "lg:col-start-1" : "lg:col-start-2";
-  const imageCol = isEven ? "lg:col-start-2" : "lg:col-start-1";
+  // Desktop (lg+): the images float to one side and the comment wraps around
+  // them, so once the text passes the bottom of the images it spreads to the
+  // full width. The float is (50% - 3rem) wide with a 6rem gutter, matching the
+  // old two-column grid. Mobile: single column, shown as images, heading, text.
+  // (Full class strings so Tailwind can detect them.)
+  const floatSide = isEven
+    ? "lg:float-right lg:ml-24"
+    : "lg:float-left lg:mr-24";
+  const headerSide = isEven ? "" : "lg:ml-auto";
 
   const imageGrid = (
-    <div className={`flex items-start lg:row-start-2 ${imageCol}`}>
-      <div className={`grid ${sub_image_number > 3 ? "grid-cols-2" : "grid-cols-1"} gap-2 mb-4 lg:mb-0`}>
+    <div className={`order-1 lg:w-[calc(50%-3rem)] ${floatSide}`}>
+      <div className={`grid ${sub_image_number > 3 ? "grid-cols-2" : "grid-cols-1"} gap-2 mb-4 lg:mb-6`}>
         {day_images.map((image, index) => (
           <GalleryTwelve
             src={image}
@@ -38,8 +43,10 @@ function Sub_Day({
     </div>
   );
 
+  // Sits in the text column; the floated images start directly below it,
+  // i.e. level with the comment.
   const dayHeader = (
-    <div className={`lg:row-start-1 ${textCol}`}>
+    <div className={`order-2 lg:w-[calc(50%-3rem)] ${headerSide}`}>
       <h1 className="py-2 text-xl font-bold text-primary-800 lg:text-3xl lg:py-4">
         {sub_title}
       </h1>
@@ -50,7 +57,7 @@ function Sub_Day({
   );
 
   const dayBody = (
-    <div className={`lg:row-start-2 ${textCol}`}>
+    <div className="order-3">
       <MarkdownRenderer
         content={sub_comment}
         className="mb-4 text-primary-800 lg:mb-0"
@@ -61,9 +68,9 @@ function Sub_Day({
 
   return (
     <div className="pt-8 bg-white">
-      <div className="grid px-8 py-2 mx-auto bg-gray-100 rounded-md gap-x-24 lg:grid-cols-2 lg:w-3/5 lg:py-12">
-        {imageGrid}
+      <div className="flex flex-col px-8 py-2 mx-auto bg-gray-100 rounded-md lg:flow-root lg:w-3/5 lg:py-12">
         {dayHeader}
+        {imageGrid}
         {dayBody}
       </div>
     </div>

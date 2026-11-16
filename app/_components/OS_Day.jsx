@@ -25,15 +25,19 @@ function OS_Day({
 
   const isEven = day_page === "Even";
 
-  // Desktop placement: heading is row 1 of the text column; images and the
-  // comment share row 2, so the images start level with day_comment.
+  // Desktop (lg+): the images float to one side and the comment wraps around
+  // them, so once the text passes the bottom of the images it spreads to the
+  // full width. The float is (50% - 3rem) wide with a 6rem gutter, matching the
+  // old two-column grid. Mobile: single column, shown as images, heading, text.
   // (Full class strings so Tailwind can detect them.)
-  const textCol = isEven ? "lg:col-start-1" : "lg:col-start-2";
-  const imageCol = isEven ? "lg:col-start-2" : "lg:col-start-1";
+  const floatSide = isEven
+    ? "lg:float-right lg:ml-24"
+    : "lg:float-left lg:mr-24";
+  const headerSide = isEven ? "" : "lg:ml-auto";
 
   const imageGrid = (
-    <div className={`flex items-start lg:row-start-2 ${imageCol}`}>
-      <div className={`grid ${image_number > 3 ? "grid-cols-2" : "grid-cols-1"} gap-2 mb-4 lg:mb-0`}>
+    <div className={`order-1 lg:w-[calc(50%-3rem)] ${floatSide}`}>
+      <div className={`grid ${image_number > 3 ? "grid-cols-2" : "grid-cols-1"} gap-2 mb-4 lg:mb-6`}>
         {day_images.map((image, index) => (
           <GalleryTwelve
             src={image}
@@ -45,8 +49,10 @@ function OS_Day({
     </div>
   );
 
+  // Sits in the text column; the floated images start directly below it,
+  // i.e. level with the comment.
   const dayHeader = (
-    <div className={`lg:row-start-1 ${textCol}`}>
+    <div className={`order-2 lg:w-[calc(50%-3rem)] ${headerSide}`}>
       <p className="text-3xl font-bold text-gray-500 lg:text-7xl">
         {day_number}
       </p>
@@ -60,7 +66,7 @@ function OS_Day({
   );
 
   const dayBody = (
-    <div className={`lg:row-start-2 ${textCol}`}>
+    <div className="order-3">
       <MarkdownRenderer
         content={day_comment}
         className="mb-4 text-primary-800 lg:mb-0"
@@ -72,9 +78,9 @@ function OS_Day({
   return (
     <>
       <div className="pt-8 bg-white">
-        <div className="grid px-8 py-2 mx-auto bg-gray-100 rounded-md gap-x-24 lg:grid-cols-2 lg:w-3/5 lg:py-12">
-          {imageGrid}
+        <div className="flex flex-col px-8 py-2 mx-auto bg-gray-100 rounded-md lg:flow-root lg:w-3/5 lg:py-12">
           {dayHeader}
+          {imageGrid}
           {dayBody}
         </div>
       </div>
