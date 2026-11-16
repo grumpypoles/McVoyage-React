@@ -25,8 +25,14 @@ function OS_Day({
 
   const isEven = day_page === "Even";
 
+  // Desktop placement: heading is row 1 of the text column; images and the
+  // comment share row 2, so the images start level with day_comment.
+  // (Full class strings so Tailwind can detect them.)
+  const textCol = isEven ? "lg:col-start-1" : "lg:col-start-2";
+  const imageCol = isEven ? "lg:col-start-2" : "lg:col-start-1";
+
   const imageGrid = (
-    <div className="flex items-center">
+    <div className={`flex items-start lg:row-start-2 ${imageCol}`}>
       <div className={`grid ${image_number > 3 ? "grid-cols-2" : "grid-cols-1"} gap-2 mb-4 lg:mb-0`}>
         {day_images.map((image, index) => (
           <GalleryTwelve
@@ -39,8 +45,8 @@ function OS_Day({
     </div>
   );
 
-  const dayInfo = (
-    <div>
+  const dayHeader = (
+    <div className={`lg:row-start-1 ${textCol}`}>
       <p className="text-3xl font-bold text-gray-500 lg:text-7xl">
         {day_number}
       </p>
@@ -50,6 +56,11 @@ function OS_Day({
       <p className="block text-lg font-normal text-primary-600 mb-6 tracking-[0.75px]">
         {day_date}
       </p>
+    </div>
+  );
+
+  const dayBody = (
+    <div className={`lg:row-start-2 ${textCol}`}>
       <MarkdownRenderer
         content={day_comment}
         className="mb-4 text-primary-800 lg:mb-0"
@@ -62,17 +73,9 @@ function OS_Day({
     <>
       <div className="pt-8 bg-white">
         <div className="grid px-8 py-2 mx-auto bg-gray-100 rounded-md gap-x-24 lg:grid-cols-2 lg:w-3/5 lg:py-12">
-          {!isEven ? (
-            <>
-              {imageGrid}
-              {dayInfo}
-            </>
-          ) : (
-            <>
-              <div className="order-1 lg:order-2">{imageGrid}</div>
-              <div className="order-2 lg:order-1">{dayInfo}</div>
-            </>
-          )}
+          {imageGrid}
+          {dayHeader}
+          {dayBody}
         </div>
       </div>
 

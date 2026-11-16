@@ -5,16 +5,13 @@ import logo from "@/public/img/logos/McWoyage_white_no_background.png";
 function Logo() {
   return (
     <Link href="/" className="z-10 flex items-center gap-4">
-      {/* <Image src="/logo.png" height="60" width="60" alt="The Wild Oasis logo" /> */}
+      {/* Static import supplies the real width/height; CSS sets the display size.
+          w-[50px] + h-auto keeps the aspect ratio, shrink-0 stops the flex row squeezing it. */}
       <Image
         src={logo}
-        quality={100}
-        height={50}
-        width={50}
         alt="McWoyage logo"
-        className="ml-10"
+        className="ml-10 w-[50px] h-auto shrink-0"
       />
-      {/* <span className="text-xl font-semibold transition-colors text-primary-200 hover:bg-stone-600" >McWoyage</span> */}
     </Link>
   );
 }
