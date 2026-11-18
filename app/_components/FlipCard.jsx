@@ -8,6 +8,7 @@ import {
   IoFootstepsOutline,
   IoCardOutline,
   IoPulseOutline,
+  IoCarOutline,
 } from "react-icons/io5";
 
 import TripButton from "@/app/_components/TripButton";
@@ -36,6 +37,12 @@ function FlipCard({
   buttonVariant,
 }) {
   const card = os_trip.card;
+
+  // Optional icons.distance_car: when present, the distance cell shows a car icon
+  // and that value instead of the walking (footsteps) distance.
+  const DistanceIcon = card.icons.distance_car ? IoCarOutline : IoFootstepsOutline;
+  const distanceText = card.icons.distance_car || card.icons.distance;
+
   const os_image = `/img/galleries/${imageDir}/${card.image}`;
   const href =
     os_trip.page_link && os_trip.page_link.length > 0
@@ -75,8 +82,8 @@ function FlipCard({
                 {card.icons.duration}
               </span>
               <span className="flex flex-row items-center w-full text-sm font-medium gap-x-2">
-                <IoFootstepsOutline className="text-xl" />
-                {card.icons.distance}
+                <DistanceIcon className="text-xl" />
+                {distanceText}
               </span>
               <span className="flex flex-row items-center w-full text-sm font-medium gap-x-2">
                 <IoCardOutline className="text-xl" />
@@ -102,7 +109,7 @@ function FlipCard({
               <p className="text-sm">{card.comment}</p>
               <Link
                 href={href}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2"
+                className="absolute -translate-x-1/2 bottom-10 left-1/2"
               >
                 <TripButton variant={buttonVariant} animated={false} size="sm">
                   Details

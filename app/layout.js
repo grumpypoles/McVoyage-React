@@ -21,16 +21,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      {/* suppressHydrationWarning: browser extensions such as Grammarly add attributes
+          to <body> before React hydrates. This only silences that element's attributes,
+          not its children. */}
       <body
+        suppressHydrationWarning
         className={`${josefin.className} antialiased min-h-screen bg-gray-50  text-primary-100 flex flex-col relative`}
       >
         <Header />
         <div className="flex-1">
-          {/* <main className="mx-auto max-w-7xl">{children}</main> */}
           <main className="w-full mx-auto">{children}</main>
         </div>
         <Footer />
-       
       </body>
     </html>
   );

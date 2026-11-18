@@ -6,6 +6,19 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  // Classes stored in MongoDB (gallery_header.position / text_color) never appear
+  // in source files, so Tailwind can't discover them. Safelist them explicitly.
+  safelist: [
+    {
+      pattern:
+        /^(top|bottom|left|right)-(0|1|2|3|4|5|6|8|10|12|16|20|24|32)$/,
+    },
+    "text-white",
+    "text-black",
+    // Classes used inside HTML links in the markdown text stored in MongoDB
+    "text-blue-500",
+    "underline",
+  ],
   theme: {
     extend: {
       colors: {

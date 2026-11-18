@@ -28,6 +28,7 @@ const GWTripSchema = new Schema(
           type: String,
           required: true,
         },
+        distance_car: { type: String },
         cost: {
           type: String,
         },
@@ -47,7 +48,7 @@ const GWTripSchema = new Schema(
       comment: {
         type: String,
         required: true,
-      }
+      },
     },
     gallery_header: {
       src: {
@@ -67,7 +68,7 @@ const GWTripSchema = new Schema(
         required: true,
       },
     },
-     introduction: {
+    introduction: {
       title: {
         type: String,
         required: true,
@@ -78,17 +79,14 @@ const GWTripSchema = new Schema(
       },
       image: {
         type: String,
-        
       },
       image_alt: {
         type: String,
-        
       },
       image_number: {
         type: Number,
-      
       },
-     },
+    },
     days: [
       {
         day_number: {
@@ -161,7 +159,7 @@ const GWTripSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const GWTrip = models.GWTrip || model("GWTrip", GWTripSchema);

@@ -28,6 +28,7 @@ const NITripSchema = new Schema(
           type: String,
           required: true,
         },
+        distance_car: { type: String },
         cost: {
           type: String,
         },
