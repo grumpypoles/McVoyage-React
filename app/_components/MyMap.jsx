@@ -6,13 +6,14 @@ import {
   IoBookOutline,
   IoMapOutline,
   IoCameraOutline,
+  IoAnalyticsOutline,
 } from "react-icons/io5";
 
 // Leaflet must be loaded client-side only — no SSR
 const LeafletMap = dynamic(() => import("@/app/_components/LeafletMap"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500 text-sm">
+    <div className="flex items-center justify-center w-full h-full text-sm text-gray-500 bg-gray-200">
       Loading map…
     </div>
   ),
@@ -26,13 +27,14 @@ const LeafletMap = dynamic(() => import("@/app/_components/LeafletMap"), {
  *   my_map.link_map is set  → Google MyMaps iframe (existing trips)
  */
 function MyMap({ my_map }) {
-  const { link_map, gpx_path, link_book, link_camera, link_video, link_folder, map_center, map_zoom } = my_map;
+  const { link_map, gpx_path, link_book, link_camera, link_video, link_folder, link_gpx, map_center, map_zoom } = my_map;
 
   const links = [
     { href: link_book,   icon: IoBookOutline,     label: "Journal"   },
     { href: link_camera, icon: IoCameraOutline,   label: "Photos"    },
     { href: link_video,  icon: IoVideocamOutline, label: "Video"     },
     { href: link_folder, icon: IoMapOutline,      label: "Reference" },
+    { href: link_gpx,    icon: IoAnalyticsOutline,     label: "Tracking"       },
   ];
 
   const activeLinks = links.filter(({ href }) => href);
@@ -59,16 +61,14 @@ function MyMap({ my_map }) {
         )}
       </div>
 
-      <div className="flex flex-row justify-around py-3 text-blue-600 border-t border-gray-200
-                      xl:order-1 xl:flex-col xl:justify-start xl:border-t-0 xl:pl-4 xl:pt-16">
+      <div className="flex flex-row justify-around py-3 text-blue-600 border-t border-gray-200 xl:order-1 xl:flex-col xl:justify-start xl:border-t-0 xl:pl-4 xl:pt-16">
         {activeLinks.map(({ href, icon: Icon, label }) => (
           <Link
             key={label}
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-y-1 text-xs font-medium hover:text-blue-800
-                       xl:flex-row xl:gap-x-2 xl:text-sm xl:mb-4"
+            className="flex flex-col items-center text-xs font-medium gap-y-1 hover:text-blue-800 xl:flex-row xl:gap-x-2 xl:text-sm xl:mb-4"
           >
             <Icon className="w-5 h-5 shrink-0" />
             <span>{label}</span>
